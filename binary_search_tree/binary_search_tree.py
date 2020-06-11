@@ -9,6 +9,8 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
+
+
 class BSTNode:
     def __init__(self, value):
         self.value = value
@@ -18,7 +20,7 @@ class BSTNode:
     # Insert the given value into the tree
     def insert(self, value):
         # compare the value to root's value to determine which direction
-        #. to go
+        # . to go
         # if value < root
         if value < self.value:
             # go left
@@ -47,45 +49,36 @@ class BSTNode:
         if self.value == target:
             return True
         # Otherwise, there is a root Node but it isn't the target, thus we to
-        #. go left or right to 
+        # . go left or right
         else:
             # if target < root, go left
             if target < self.value:
                 # Check to see if there is a left node already
                 if self.left:
-                    # if there is, run contains on self.left
-                    if self.left.contains(target):
-                        return True
-                # Otherwise, if no left node, return False
-                    else:
-                        return False
-            # Otherwise, if target is >= root, go right
+                    # if there is, run contains (recur) on self.left
+                    return self.left.contains(target)
+
             else:
                 # Check to see if there is a right node already
                 if self.right:
-                    # if there is, run contains on self.right
-                    if self.right.contains(target):
-                        return True
-                # Otherwise, if no right mode, return False                    
-                    else:
-                        return False
+                    # if there is, run contains (recur) on self.right
+                    return self.right.contains(target)
 
-
+            # if there is no left or right node and target hasn't been found
+            #. yet, return False
+            return False
+    
+    
     # Return the maximum value found in the tree
+
     def get_max(self):
-        # Check to see if there is a right node. If there isn't, root node will
-        #. be the max
+        # Check to see if there is a right node. If there isn't, return the
+        #. value
         if not self.right:
             return self.value
-        # Otherwise: go right
+        # Otherwise: recur on right side
         else:
-            # Check to see if there is a right node
-            if self.right:
-                # if there is, run get_max() on self.right
-                return self.right.get_max()
-            else:
-                # if there isn't, this node will be the max
-                return self.value
+            return self.right.get_max()
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
@@ -99,21 +92,21 @@ class BSTNode:
         if self.right:
             # if there is, make the right node the current value
             self.right.for_each(fn)
-            
 
     # Part 2 -----------------------
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
+
     def in_order_print(self, node):
-      
-      if node:
-          # recur on left child of the node
-          node.in_order_print(node.left)
-          # print the value of the left child
-          print(node.value)
-          # recur on right child of the node
-          node.in_order_print(node.right)
+
+        if node:
+            # recur on left child of the node
+            node.in_order_print(node.left)
+            # print the value of the left child
+            print(node.value)
+            # recur on right child of the node
+            node.in_order_print(node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
@@ -130,13 +123,22 @@ class BSTNode:
 
     # Print Pre-order recursive DFT
     def pre_order_dft(self, node):
-        # Print the value of the current node
-        print(node.value)
-        # Recur on left child
-        node.pre_order_dft(node.left)
-        # Recur on right child
-        node.pre_order_dft(node.right)
+
+        if node:
+            # Print the value of the root
+            print(node.value)
+            # Recur on left child
+            node.pre_order_dft(node.left)
+            # Recur on right child
+            node.pre_order_dft(node.right)
 
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
-        pass
+
+        if node:
+            # Recur on the left child
+            node.post_order_dft(node.left)
+            # Recur on the right child
+            node.post_order_dft(node.right)
+            # Print the root
+            print(node.value)
