@@ -1,3 +1,5 @@
+from queue import Queue
+
 """
 Binary search trees are a data structure that enforce an ordering over 
 the data they store. That ordering in turn makes it a lot more efficient 
@@ -110,13 +112,53 @@ class BSTNode:
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
-    def bft_print(self):
-        pass
+    def bft_print(self, node):
+        
+        # breadth first traversal follows FIFO ordering of its nodes
+        # init a deque 
+        q = []
+        # add the first node to our q 
+        q.insert(0, node)
+
+        while len(q) > 0:
+            # current node is the first node in the q
+            current_node = q.pop()
+            # print current nodes value
+            print(current_node.value)
+            
+            # if current node has a left child, add it to the beginning of the
+            #. queue
+            if current_node.left:
+              q.insert(0, current_node.left)
+            # if current node has a right child, add it to the beginning of the
+            #. queue
+            if current_node.right:
+              q.insert(0, current_node.right)
+
+        # q = Queue()
+        # q.enqueue(node)
+        
+        # while q.size > 0:
+        #     current_node = q.dequeue()
+        #     print(current_node.value)
+        #     if current_node.left:
+        #         q.enqueue(current_node.left)
+        #     if current_node.right:
+        #         q.enqueue(current_node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        # print base case
+        print(node.value)
+        # Check to see if there is a left node
+        if node.left:
+            # if there is, run dft_print on left child node
+            node.dft_print(node.left)
+        # Check to see if there is a right node
+        if node.right:
+            # if there is, run dft_print on right child node
+            node.dft_print(node.right)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
